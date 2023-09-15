@@ -79,9 +79,6 @@ local.properties
 # sbteclipse plugin
 .target
 
-# STS (Spring Tool Suite)
-.springBeans
-
 # Code Recommenders
 .recommenders/
 
