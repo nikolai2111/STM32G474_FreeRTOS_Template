@@ -38,9 +38,6 @@ extern "C" {
 #include "usart.h"
 #include "gpio.h"
 
-#include "FreeRTOS.h"
-#include "task.h"
-
 #include "putchar_getchar_redirect.h"
 
 /* Exported types -----------------------------------------------------------*/
