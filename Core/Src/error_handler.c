@@ -1,12 +1,11 @@
 /**
  ******************************************************************************
- * Source		: HAL MSP
+ * Source		: Error Handlers
  ******************************************************************************
- * @file		: stm32g4xx_hal_msp.c
- * @brief		: This file provides code for the MSP Initialization
- * 				and de-Initialization codes.
+ * @file		: error_handler.c
+ * @brief		: Contains the error handlers and assert functions.
  * @author		: N. Zoller (NZ)
- * @date		: 18.09.2023
+ * @date		: 13.09.2023
  ******************************************************************************
  * @remark		: Last Modifications:
  * 				- none
@@ -36,32 +35,62 @@
 
 /* Private function prototypes ----------------------------------------------*/
 
-/* External functions -------------------------------------------------------*/
+/* External functions --------------------------------------------------------*/
 
 /* Private user code --------------------------------------------------------*/
 
 /**
- * @brief		Initializes the Global MSP.
+ * @brief		This function is executed in case of error occurrence.
  *
  * @param		None
  * @return		None
  *
  * @author		STMicroelectronics
  * @remark		Last Modifications:
- * 				- none
+ * 				- 15.09.23	NZ	Mod: Implemented the error handling procedure
+ * 				and flash the on board LED.
  *****************************************************************************/
-void HAL_MspInit(void)
+void Error_Handler(void)
 {
-	__HAL_RCC_SYSCFG_CLK_ENABLE();
-	__HAL_RCC_PWR_CLK_ENABLE();
+	/* User can add his own implementation to report the HAL error return state */
+	__disable_irq();
+	while (true)
+	{
+		HAL_GPIO_TogglePin(ERROR_LED_PORT, ERROR_LED_PIN);
 
-	/* System interrupt init*/
-	/* PendSV_IRQn interrupt configuration */
-	HAL_NVIC_SetPriority(PendSV_IRQn, 15, 0);
+		/**
+		 * @note NOP is used because HAL_Delay is based on interrupts and does
+		 * not work. So in the error state the CPU time does not matter.
+		 */
+		for (unsigned long i = 0; i < 100000; i++)
+		{
+			asm("NOP");
+		}
+	}
 }
+
+#ifdef  USE_FULL_ASSERT
+/**
+  * @brief  	Reports the name of the source file and the source line number
+  *         	where the assert_param error has occurred.
+  * @param  	file:		pointer to the source file name
+  * @param  	line: 		assert_param error line source number
+  * @return 	None
+  *
+  * @author		STMicroelectronics
+  * @remark		Last Modifications:
+  * 				- none
+  ****************************************************************************/
+void assert_failed(uint8_t *file, uint32_t line)
+{
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+}
+
+#endif /* USE_FULL_ASSERT */
 
 /**
  ******************************************************************************
- * End Source	: HAL MSP
+ * End Source	: Error Handlers
  ******************************************************************************
  */

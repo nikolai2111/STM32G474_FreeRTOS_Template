@@ -1,5 +1,17 @@
-/* USER CODE BEGIN Header */
-/*
+/**
+ ******************************************************************************
+ * Header		: FreeRTOS Configuration
+ ******************************************************************************
+ * @file		: main.h
+ * @brief		: Header for FreeRTOS configuration.
+ * @author		: N. Zoller (NZ)
+ * @date		: 18.09.2023
+ ******************************************************************************
+ * @remark		: Last Modifications:
+ * 				- none
+ ******************************************************************************
+ * @attention
+ *
  * FreeRTOS Kernel V10.3.1
  * Portion Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Portion Copyright (C) 2019 StMicroelectronics, Inc.  All Rights Reserved.
@@ -24,14 +36,14 @@
  * http://www.FreeRTOS.org
  * http://aws.amazon.com/freertos
  *
- * 1 tab == 4 spaces!
+ ******************************************************************************
  */
-/* USER CODE END Header */
 
+/* Define to prevent recursive inclusion ------------------------------------*/
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
-/*-----------------------------------------------------------
+/*-----------------------------------------------------------------------------
  * Application specific definitions.
  *
  * These definitions should be adjusted for your particular hardware and
@@ -41,21 +53,22 @@
  * FreeRTOS API documentation available on the FreeRTOS.org web site.
  *
  * See http://www.freertos.org/a00110.html
- *----------------------------------------------------------*/
+ *---------------------------------------------------------------------------*/
 
-/* USER CODE BEGIN Includes */
-/* Section where include file can be added */
-/* USER CODE END Includes */
+/* Includes -----------------------------------------------------------------*/
 
 /* Ensure definitions are only used by the compiler, and not by the assembler. */
 #if defined(__ICCARM__) || defined(__CC_ARM) || defined(__GNUC__)
-  #include <stdint.h>
-  extern uint32_t SystemCoreClock;
-  void xPortSysTickHandler(void);
-/* USER CODE BEGIN 0 */
-  extern void configureTimerForRunTimeStats(void);
-  extern unsigned long getRunTimeCounterValue(void);
-/* USER CODE END 0 */
+#include <stdint.h>
+extern uint32_t SystemCoreClock;
+void xPortSysTickHandler(void);
+
+/**
+ * @todo	: Implement RunTimeStats
+ */
+extern void configureTimerForRunTimeStats(void);
+extern unsigned long getRunTimeCounterValue(void);
+
 #endif
 #define configENABLE_FPU                         0
 #define configENABLE_MPU                         0
@@ -69,19 +82,19 @@
 #define configTICK_RATE_HZ                       ((TickType_t)1000)
 #define configMAX_PRIORITIES                     ( 7 )
 #define configMINIMAL_STACK_SIZE                 ((uint16_t)128)
-#define configTOTAL_HEAP_SIZE                    ((size_t)3072)
+#define configTOTAL_HEAP_SIZE                    ((size_t)0x8000)
 #define configMAX_TASK_NAME_LEN                  ( 16 )
-#define configGENERATE_RUN_TIME_STATS            1
+#define configGENERATE_RUN_TIME_STATS            0
 #define configUSE_16_BIT_TICKS                   0
 #define configUSE_MUTEXES                        1
 #define configQUEUE_REGISTRY_SIZE                8
 #define configUSE_MALLOC_FAILED_HOOK             1
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION  1
-/* USER CODE BEGIN MESSAGE_BUFFER_LENGTH_TYPE */
+
+
 /* Defaults to size_t for backward compatibility, but can be changed
-   if lengths will always be less than the number of bytes in a size_t. */
+ if lengths will always be less than the number of bytes in a size_t. */
 #define configMESSAGE_BUFFER_LENGTH_TYPE         size_t
-/* USER CODE END MESSAGE_BUFFER_LENGTH_TYPE */
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES                    0
@@ -91,7 +104,7 @@
 #define configUSE_NEWLIB_REENTRANT          1
 
 /* Set the following definitions to 1 to include the API function, or zero
-to exclude the API function. */
+ to exclude the API function. */
 #define INCLUDE_vTaskPrioritySet             1
 #define INCLUDE_uxTaskPriorityGet            1
 #define INCLUDE_vTaskDelete                  1
@@ -106,50 +119,55 @@ to exclude the API function. */
  /* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */
  #define configPRIO_BITS         __NVIC_PRIO_BITS
 #else
- #define configPRIO_BITS         4
+#define configPRIO_BITS         4
 #endif
 
 /* The lowest interrupt priority that can be used in a call to a "set priority"
-function. */
+ function. */
 #define configLIBRARY_LOWEST_INTERRUPT_PRIORITY   15
 
 /* The highest interrupt priority that can be used by any interrupt service
-routine that makes calls to interrupt safe FreeRTOS API functions.  DO NOT CALL
-INTERRUPT SAFE FREERTOS API FUNCTIONS FROM ANY INTERRUPT THAT HAS A HIGHER
-PRIORITY THAN THIS! (higher priorities are lower numeric values. */
+ routine that makes calls to interrupt safe FreeRTOS API functions.  DO NOT CALL
+ INTERRUPT SAFE FREERTOS API FUNCTIONS FROM ANY INTERRUPT THAT HAS A HIGHER
+ PRIORITY THAN THIS! (higher priorities are lower numeric values. */
 #define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY 5
 
 /* Interrupt priorities used by the kernel port layer itself.  These are generic
-to all Cortex-M ports, and do not rely on any particular library functions. */
+ to all Cortex-M ports, and do not rely on any particular library functions. */
 #define configKERNEL_INTERRUPT_PRIORITY 		( configLIBRARY_LOWEST_INTERRUPT_PRIORITY << (8 - configPRIO_BITS) )
 /* !!!! configMAX_SYSCALL_INTERRUPT_PRIORITY must not be set to zero !!!!
-See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
+ See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY 	( configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS) )
 
 /* Normal assert() semantics without relying on the provision of an assert.h
-header file. */
+ header file. */
 /* USER CODE BEGIN 1 */
 #define configASSERT( x ) if ((x) == 0) {taskDISABLE_INTERRUPTS(); for( ;; );}
 /* USER CODE END 1 */
 
 /* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
-standard names. */
+ standard names. */
 #define vPortSVCHandler    SVC_Handler
 #define xPortPendSVHandler PendSV_Handler
 
 /* IMPORTANT: This define is commented when used with STM32Cube firmware, when the timebase source is SysTick,
-              to prevent overwriting SysTick_Handler defined within STM32Cube HAL */
+ to prevent overwriting SysTick_Handler defined within STM32Cube HAL */
 
 /* #define xPortSysTickHandler SysTick_Handler */
 
-/* USER CODE BEGIN 2 */
 /* Definitions needed when configGENERATE_RUN_TIME_STATS is on */
-#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS configureTimerForRunTimeStats
-#define portGET_RUN_TIME_COUNTER_VALUE getRunTimeCounterValue
-/* USER CODE END 2 */
+/**
+ * @todo	: Implement RunTimeStats
+ */
+// #define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS configureTimerForRunTimeStats
+// #define portGET_RUN_TIME_COUNTER_VALUE getRunTimeCounterValue
 
-/* USER CODE BEGIN Defines */
 /* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */
-/* USER CODE END Defines */
 
 #endif /* FREERTOS_CONFIG_H */
+
+/**
+ ******************************************************************************
+ * End Header	: Main
+ ******************************************************************************
+ */

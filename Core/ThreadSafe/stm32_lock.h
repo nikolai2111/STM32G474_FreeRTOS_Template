@@ -339,7 +339,7 @@ typedef uint8_t LockingData_t;  /**< Unused */
   */
 static inline void stm32_lock_init(LockingData_t *lock)
 {
-  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  //STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
 }
 
 /**
@@ -348,7 +348,7 @@ static inline void stm32_lock_init(LockingData_t *lock)
   */
 static inline void stm32_lock_acquire(LockingData_t *lock)
 {
-  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  //STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
   STM32_LOCK_BLOCK_IF_INTERRUPT_CONTEXT();
   vTaskSuspendAll();
 }
@@ -359,7 +359,7 @@ static inline void stm32_lock_acquire(LockingData_t *lock)
   */
 static inline void stm32_lock_release(LockingData_t *lock)
 {
-  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  //STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
   STM32_LOCK_BLOCK_IF_INTERRUPT_CONTEXT();
   xTaskResumeAll();
 }

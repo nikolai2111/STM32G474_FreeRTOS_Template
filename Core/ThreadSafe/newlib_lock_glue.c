@@ -162,7 +162,7 @@ void __retarget_lock_close_recursive(_LOCK_T lock)
   */
 void __retarget_lock_acquire(_LOCK_T lock)
 {
-  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  //STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
   stm32_lock_acquire(STM32_LOCK_PARAMETER(lock));
 }
 
@@ -172,7 +172,7 @@ void __retarget_lock_acquire(_LOCK_T lock)
   */
 void __retarget_lock_acquire_recursive(_LOCK_T lock)
 {
-  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  //STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
   stm32_lock_acquire(STM32_LOCK_PARAMETER(lock));
 }
 
@@ -204,7 +204,7 @@ int __retarget_lock_try_acquire_recursive(_LOCK_T lock)
   */
 void __retarget_lock_release(_LOCK_T lock)
 {
-  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  //STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
   stm32_lock_release(STM32_LOCK_PARAMETER(lock));
 }
 
@@ -214,7 +214,7 @@ void __retarget_lock_release(_LOCK_T lock)
   */
 void __retarget_lock_release_recursive(_LOCK_T lock)
 {
-  STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
+  //STM32_LOCK_BLOCK_IF_NULL_ARGUMENT(lock);
   stm32_lock_release(STM32_LOCK_PARAMETER(lock));
 }
 

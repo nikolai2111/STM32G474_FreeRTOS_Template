@@ -11,7 +11,6 @@ RM := rm -rf
 -include sources.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/subdir.mk
--include Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/subdir.mk
 -include Drivers/STM32G4xx_HAL_Driver/Src/subdir.mk
 -include Core/ThreadSafe/subdir.mk
@@ -66,7 +65,7 @@ main-build: STM32G474_FreeRTOS_Template.elf secondary-outputs
 
 # Tool invocations
 STM32G474_FreeRTOS_Template.elf STM32G474_FreeRTOS_Template.map: $(OBJS) $(USER_OBJS) D:\Development\Software\STM32\CubeIDE_Workspace\STM32G474_FreeRTOS_Template\STM32G474RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "STM32G474_FreeRTOS_Template.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Development\Software\STM32\CubeIDE_Workspace\STM32G474_FreeRTOS_Template\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32G474_FreeRTOS_Template.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "STM32G474_FreeRTOS_Template.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Development\Software\STM32\CubeIDE_Workspace\STM32G474_FreeRTOS_Template\STM32G474RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32G474_FreeRTOS_Template.map" -Wl,--gc-sections -static -Wl,--wrap=_malloc_r -Wl,--wrap=_free_r -Wl,--wrap=_realloc_r --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
