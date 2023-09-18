@@ -1,0 +1,3 @@
+[submodule "Middlewares/Own/FreeRTOS_CPP-Wrappers"]
+	path = Middlewares/Own/FreeRTOS_CPP-Wrappers
+	url = https://github.com/nikolai2111/FreeRTOS_CPP-Wrappers.git
