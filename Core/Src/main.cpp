@@ -2,7 +2,7 @@
  ******************************************************************************
  * Source		: Main
  ******************************************************************************
- * @file		: main.c
+ * @file		: main.cpp
  * @brief		: Main program body
  * @author		: N. Zoller (NZ)
  * @date		: 07.09.2023
@@ -24,55 +24,59 @@
  ******************************************************************************
  */
 
-/* Includes -----------------------------------------------------------------*/
+/* C Includes ----------------------------------------------------------------*/
 #include "main.h"
 
-#include "FreeRTOS.h"
-#include "task.h"
+/* C++ Includes --------------------------------------------------------------*/
+#include "FreeRTOS.hpp"
+#include "Task.hpp"
 
-/* Private typedef ----------------------------------------------------------*/
+/* Private namespaces --------------------------------------------------------*/
+using namespace std::chrono_literals;
 
-/* Private define -----------------------------------------------------------*/
+/* Private typedef -----------------------------------------------------------*/
 
-/* Private macro ------------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
 
-/* Private variables --------------------------------------------------------*/
-TaskHandle_t xHandle = NULL;
+/* Private macro -------------------------------------------------------------*/
 
-/* Private function prototypes ----------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+
+/* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 
-void vDefaultTask(void *pvParam);
+void DefaultTask_Runnable(void *pvParam);
 
-/* Private user code --------------------------------------------------------*/
+/* Private Mutex(es) ---------------------------------------------------------*/
+
+/* Private Semaphore(s) ------------------------------------------------------*/
+
+/* Private Timer(s) ----------------------------------------------------------*/
+
+/* Private Queue(s) ----------------------------------------------------------*/
+
+/* Private task(s) -----------------------------------------------------------*/
+Task DefaultTask = Task(DefaultTask_Runnable, "default Task", 1024, tskIDLE_PRIORITY);
 
 /**
  * @brief		The application entry point.
  *
  * @param		None
- * @return		int		exit code
+ * @return		int
  *
  * @author		STMicroelectronics
  * @remark		Last Modifications:
- * 				- none
+ * 				- 12.09.23	NZ	Mod: Input arguments to argc and *argv
  *****************************************************************************/
-int main(void)
+int main(int argc, char *argv[])
 {
-	/* MCU Configuration ----------------------------------------------------*/
+	/* MCU Configuration--------------------------------------------------------*/
 
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
 	HAL_Init();
 
-	/* USER CODE BEGIN Init */
-
-	/* USER CODE END Init */
-
 	/* Configure the system clock */
 	SystemClock_Config();
-
-	/* USER CODE BEGIN SysInit */
-
-	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
@@ -92,17 +96,10 @@ int main(void)
 
 	/* Create and configure Queues */
 
-	/* Create the thread(s) */
-	/* definition and creation of defaultTask */
-	xTaskCreate(vDefaultTask,	/* Function that implements the task. */
-		"defaultTask",			/* Text name for the task. */
-		2048,					/* Stack size in words, not bytes. */
-		(void*) 1,				/* Parameter passed into the task. */
-		tskIDLE_PRIORITY,		/* Priority at which the task is created. */
-		&xHandle);				/* Used to pass out the created task's handle. */
+	/* Create the task(s) */
 
 	/* Start scheduler */
-	vTaskStartScheduler();
+	FreeRTOS::startScheduler();
 
 	/* We should never get here as control is now taken by the scheduler */
 	while (true)
@@ -113,17 +110,17 @@ int main(void)
 /**
  * @brief		System Default Task
  *
- * @param  	pvParameters:	Not used
- * @return 	None
+ * @param  		pvParameters:	Not used
+ * @return 		None
  *
- * @details	Default task for this program.
+ * @details		Default task for this program.
  *
  * @author		N. Zoller (NZ)
  * @date		07.09.2023
  * @remark		Last Modifications:
- * 				- none
+ * 				- 12.09.23	NZ	Mod: Content to the FreeRTOS Wrappers
  *****************************************************************************/
-void vDefaultTask(void *pvParam)
+void DefaultTask_Runnable(void *pvParam)
 {
 	char rx_buff[32];
 
@@ -135,7 +132,7 @@ void vDefaultTask(void *pvParam)
 		scanf("%31s", rx_buff);
 		printf("\n\rHello %s...\n\r", rx_buff);
 
-		vTaskDelay(1000);
+		DefaultTask.delay(FreeRTOS::convertToTicks(1s));
 	}
 }
 
