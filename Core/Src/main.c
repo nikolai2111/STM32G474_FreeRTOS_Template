@@ -150,7 +150,9 @@ void vDefaultTask(void *pvParam)
  *
  * @author		STMicroelectronics
  * @remark		Last Modifications:
- * 				- 19.09.23	NZ	Mod: Clock to use the external 24MHz Crystal.
+ * 				- 19.09.23	NZ	Mod: Clock to use the external 24MHz crystal
+ * 								and the external 32.768kHz crystal, they are
+ * 								the default configuration on the nucleo-board.
  *****************************************************************************/
 void SystemClock_Config(void)
 {
