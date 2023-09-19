@@ -8,7 +8,7 @@
  * @date		: 18.09.2023
  ******************************************************************************
  * @remark		: Last Modifications:
- * 				- none
+ * 				- 19.09.23	NZ	Add: RunTime Statistics
  ******************************************************************************
  * @attention
  *
@@ -35,6 +35,8 @@
  *
  * http://www.FreeRTOS.org
  * http://aws.amazon.com/freertos
+ *
+ * 1 tab == 4 spaces!
  *
  ******************************************************************************
  */
@@ -63,9 +65,6 @@
 extern uint32_t SystemCoreClock;
 void xPortSysTickHandler(void);
 
-/**
- * @todo	: Implement RunTimeStats
- */
 extern void configureTimerForRunTimeStats(void);
 extern unsigned long getRunTimeCounterValue(void);
 
@@ -84,13 +83,13 @@ extern unsigned long getRunTimeCounterValue(void);
 #define configMINIMAL_STACK_SIZE                 ((uint16_t)128)
 #define configTOTAL_HEAP_SIZE                    ((size_t)0x8000)
 #define configMAX_TASK_NAME_LEN                  ( 16 )
-#define configGENERATE_RUN_TIME_STATS            0
+#define configGENERATE_RUN_TIME_STATS            1
+#define configUSE_TRACE_FACILITY                 1
+#define configUSE_STATS_FORMATTING_FUNCTIONS     1
 #define configUSE_16_BIT_TICKS                   0
 #define configUSE_MUTEXES                        1
 #define configQUEUE_REGISTRY_SIZE                8
-#define configUSE_MALLOC_FAILED_HOOK             1
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION  1
-
 
 /* Defaults to size_t for backward compatibility, but can be changed
  if lengths will always be less than the number of bytes in a size_t. */
@@ -141,9 +140,7 @@ extern unsigned long getRunTimeCounterValue(void);
 
 /* Normal assert() semantics without relying on the provision of an assert.h
  header file. */
-/* USER CODE BEGIN 1 */
 #define configASSERT( x ) if ((x) == 0) {taskDISABLE_INTERRUPTS(); for( ;; );}
-/* USER CODE END 1 */
 
 /* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
  standard names. */
@@ -156,11 +153,8 @@ extern unsigned long getRunTimeCounterValue(void);
 /* #define xPortSysTickHandler SysTick_Handler */
 
 /* Definitions needed when configGENERATE_RUN_TIME_STATS is on */
-/**
- * @todo	: Implement RunTimeStats
- */
-// #define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS configureTimerForRunTimeStats
-// #define portGET_RUN_TIME_COUNTER_VALUE getRunTimeCounterValue
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS configureTimerForRunTimeStats
+#define portGET_RUN_TIME_COUNTER_VALUE getRunTimeCounterValue
 
 /* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */
 

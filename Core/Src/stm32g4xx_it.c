@@ -189,6 +189,28 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
+ * @brief		This function handles the TIM17 interrupt.
+ *
+ * @param		None
+ * @return		None
+ *
+ * @details		This function handles TIM1 trigger and commutation interrupts
+ * 				and TIM17 global interrupt. Which is used for the Run Time
+ * 				Statistics.
+ *
+ * @author		STMicroelectronics
+ * @remark		Last Modifications:
+ * 				- 19.09.23	NZ	Add: RunTime Statistics
+ *****************************************************************************/
+void TIM1_TRG_COM_TIM17_IRQHandler(void)
+{
+	// Counts up FreeRTOS RunTime Statistics ticks
+	ulHighFrequencyTimerTicks++;
+
+	HAL_TIM_IRQHandler(&htim17);
+}
+
+/**
  ******************************************************************************
  * End Source	: Interrupt Service Routines
  ******************************************************************************

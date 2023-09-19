@@ -11,7 +11,7 @@
  * @date		: 13.09.2023
  ******************************************************************************
  * @remark		: Last Modifications:
- * 				- none
+ * 				- 19.09.23	NZ	Add: The call of the Error_Handler().
  ******************************************************************************
  * @attention
  *
@@ -68,8 +68,7 @@
  * @remark		Last Modifications:
  * 				- 13.09.23	NZ	Mod: Function content to return NULL and do
  * 								nothing.
- *
- * @todo		- Implement detection that sbrk was used.
+ * 				- 19.09.23	NZ	Add: The call of the Error_Handler().
  *****************************************************************************/
 void* _sbrk(ptrdiff_t incr)
 {

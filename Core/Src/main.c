@@ -8,9 +8,8 @@
  * @date		: 07.09.2023
  ******************************************************************************
  * @remark		: Last Modifications:
- * 				- none
- ******************************************************************************
- * @todo		:	- none
+ * 				- 19.09.23	NZ	Add: RunTime Statistics
+ * 				- 19.09.23	NZ	Mod: Clock to use the external 24MHz Crystal.
  ******************************************************************************
  * @attention
  *
@@ -37,6 +36,8 @@
 /* Private macro ------------------------------------------------------------*/
 
 /* Private variables --------------------------------------------------------*/
+volatile unsigned long ulHighFrequencyTimerTicks;
+
 TaskHandle_t xHandle = NULL;
 
 /* Private function prototypes ----------------------------------------------*/
@@ -54,7 +55,7 @@ void vDefaultTask(void *pvParam);
  *
  * @author		STMicroelectronics
  * @remark		Last Modifications:
- * 				- none
+ * 				- 19.09.23	NZ	Add: RunTime Statistics
  *****************************************************************************/
 int main(void)
 {
@@ -76,6 +77,7 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
+	MX_TIM17_Init();
 	MX_LPUART1_UART_Init();
 
 	/**
@@ -113,10 +115,10 @@ int main(void)
 /**
  * @brief		System Default Task
  *
- * @param  	pvParameters:	Not used
- * @return 	None
+ * @param  		pvParameters:	Not used
+ * @return 		None
  *
- * @details	Default task for this program.
+ * @details		Default task for this program.
  *
  * @author		N. Zoller (NZ)
  * @date		07.09.2023
@@ -125,15 +127,19 @@ int main(void)
  *****************************************************************************/
 void vDefaultTask(void *pvParam)
 {
-	char rx_buff[32];
+	//char rx_buff[32];
 
 	while (true)
 	{
 		/* Task code goes here. */
+
 		printf("----------------------------------\n\r");
 		printf("Enter your name: ");
-		scanf("%31s", rx_buff);
-		printf("\n\rHello %s...\n\r", rx_buff);
+
+		/*
+		 scanf("%31s", rx_buff);
+		 printf("\n\rHello %s...\n\r", rx_buff);
+		 */
 
 		vTaskDelay(1000);
 	}
@@ -147,7 +153,7 @@ void vDefaultTask(void *pvParam)
  *
  * @author		STMicroelectronics
  * @remark		Last Modifications:
- * 				- none
+ * 				- 19.09.23	NZ	Mod: Clock to use the external 24MHz Crystal.
  *****************************************************************************/
 void SystemClock_Config(void)
 {
@@ -161,9 +167,8 @@ void SystemClock_Config(void)
 	/** Initializes the RCC Oscillators according to the specified parameters
 	 * in the RCC_OscInitTypeDef structure.
 	 */
-	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
 	{
@@ -174,7 +179,7 @@ void SystemClock_Config(void)
 	 */
 	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
 			| RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
-	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSE;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
 	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;

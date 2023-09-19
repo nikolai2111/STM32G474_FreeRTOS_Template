@@ -10,6 +10,8 @@
  * @remark		: Last Modifications:
  * 				- none
  ******************************************************************************
+ * @todo		:	- Change the port and pin of the error led
+ ******************************************************************************
  * @attention
  *
  * Copyright (c) 2023 STMicroelectronics.
@@ -35,8 +37,9 @@ extern "C" {
 
 #include "stm32g4xx_hal.h"
 
-#include "usart.h"
 #include "gpio.h"
+#include "tim.h"
+#include "usart.h"
 
 #include "putchar_getchar_redirect.h"
 
@@ -47,6 +50,9 @@ extern "C" {
 /* Exported macro -----------------------------------------------------------*/
 #define ERROR_LED_PORT	GPIOA
 #define ERROR_LED_PIN	GPIO_PIN_5
+
+/* Exported variables -------------------------------------------------------*/
+extern volatile unsigned long ulHighFrequencyTimerTicks;
 
 /* Exported functions prototypes --------------------------------------------*/
 void Error_Handler(void);
