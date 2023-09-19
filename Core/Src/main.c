@@ -38,7 +38,7 @@
 /* Private variables --------------------------------------------------------*/
 volatile unsigned long ulHighFrequencyTimerTicks;
 
-TaskHandle_t xHandle = NULL;
+TaskHandle_t xDefaultTask_Handle = NULL;
 
 /* Private function prototypes ----------------------------------------------*/
 void SystemClock_Config(void);
@@ -101,7 +101,7 @@ int main(void)
 		2048,					/* Stack size in words, not bytes. */
 		(void*) 1,				/* Parameter passed into the task. */
 		tskIDLE_PRIORITY,		/* Priority at which the task is created. */
-		&xHandle);				/* Used to pass out the created task's handle. */
+		&xDefaultTask_Handle);	/* Used to pass out the created task's handle. */
 
 	/* Start scheduler */
 	vTaskStartScheduler();
@@ -127,7 +127,7 @@ int main(void)
  *****************************************************************************/
 void vDefaultTask(void *pvParam)
 {
-	//char rx_buff[32];
+	char rx_buff[32];
 
 	while (true)
 	{
@@ -135,11 +135,8 @@ void vDefaultTask(void *pvParam)
 
 		printf("----------------------------------\n\r");
 		printf("Enter your name: ");
-
-		/*
-		 scanf("%31s", rx_buff);
-		 printf("\n\rHello %s...\n\r", rx_buff);
-		 */
+		//scanf("%31s", rx_buff);
+		printf("\n\rHello %s...\n\r", rx_buff);
 
 		vTaskDelay(1000);
 	}
