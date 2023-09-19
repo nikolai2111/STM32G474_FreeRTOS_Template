@@ -127,7 +127,7 @@ int main(void)
  *****************************************************************************/
 void vDefaultTask(void *pvParam)
 {
-	char rx_buff[32];
+	char rx_buff[32] = {0};
 
 	while (true)
 	{
@@ -154,8 +154,8 @@ void vDefaultTask(void *pvParam)
  *****************************************************************************/
 void SystemClock_Config(void)
 {
-	RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
-	RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
+	RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+	RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
 	/** Configure the main internal regulator output voltage
 	 */
