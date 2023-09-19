@@ -60,9 +60,10 @@ void Error_Handler(void)
 
 		/**
 		 * @note NOP is used because HAL_Delay is based on interrupts and does
-		 * not work. So in the error state the CPU time does not matter.
+		 * not work. So in the error state the CPU time does not matter. Led
+		 * flashed with approx. 200Hz.
 		 */
-		for (unsigned long i = 0; i < 100000; i++)
+		for (unsigned long i = 0; i < 120000; i++)
 		{
 			asm("NOP");
 		}
