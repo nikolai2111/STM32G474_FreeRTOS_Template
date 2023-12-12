@@ -50,7 +50,9 @@ extern "C" {
 #define ERROR_LED_PIN	GPIO_PIN_5
 
 /* Exported variables -------------------------------------------------------*/
+#ifdef DEBUG
 extern volatile unsigned long ulHighFrequencyTimerTicks;
+#endif /* DEBUG */
 
 /* Exported functions prototypes --------------------------------------------*/
 void Error_Handler(void);

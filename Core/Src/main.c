@@ -47,7 +47,9 @@
 /* Private variables --------------------------------------------------------*/
 TaskHandle_t xDefaultTask_Handle = NULL;
 
+#ifdef DEBUG
 volatile unsigned long ulHighFrequencyTimerTicks;
+#endif /* DEBUG */
 
 /* Private function prototypes ----------------------------------------------*/
 void SystemClock_Config(void);
@@ -78,8 +80,11 @@ int main(void)
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
-	MX_TIM17_Init();
 	MX_LPUART1_UART_Init();
+
+#ifdef DEBUG
+	MX_TIM17_Init();
+#endif /* DEBUG */
 
 	/**
 	 * @note Disable internal buffering of the input stream to avoid unexpected

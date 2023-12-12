@@ -200,8 +200,11 @@ void SysTick_Handler(void)
  *****************************************************************************/
 void TIM1_TRG_COM_TIM17_IRQHandler(void)
 {
+
+#ifdef DEBUG
 	// Counts up FreeRTOS RunTime Statistics ticks
 	ulHighFrequencyTimerTicks++;
+#endif /* DEBUG */
 
 	HAL_TIM_IRQHandler(&htim17);
 }

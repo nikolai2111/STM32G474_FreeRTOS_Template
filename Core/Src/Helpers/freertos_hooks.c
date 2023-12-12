@@ -61,7 +61,10 @@ void vApplicationMallocFailedHook(void)
  *****************************************************************************/
 void configureTimerForRunTimeStats(void)
 {
+#ifdef DEBUG
 	ulHighFrequencyTimerTicks = 0;
+#endif /* DEBUG */
+
 	HAL_TIM_Base_Start_IT(&htim17);
 }
 
@@ -78,7 +81,11 @@ void configureTimerForRunTimeStats(void)
  *****************************************************************************/
 unsigned long getRunTimeCounterValue(void)
 {
+#ifdef DEBUG
 	return ulHighFrequencyTimerTicks;
+#else
+	return 0;
+#endif /* DEBUG */
 }
 
 /**
