@@ -9,6 +9,7 @@
  ******************************************************************************
  * @remark		: Last Modifications:
  * 				- 15.09.23	NZ	Mod: Split up in a source and header file
+ * 				- 12.12.23	NZ	Mod: Cleaned up file.
  ******************************************************************************
  * @attention
  * Source		: https://forum.digikey.com/t/easily-use-scanf-on-stm32/21103
@@ -25,9 +26,11 @@ extern "C"
 #endif
 
 /* Private includes ----------------------------------------------------------*/
-#include "stdio.h"
+/* Libaries */
+#include <stdio.h>
+#include <main.h>
 
-#include "main.h"
+/* Hardware */
 #include "usart.h"
 
 /* Exported types ------------------------------------------------------------*/

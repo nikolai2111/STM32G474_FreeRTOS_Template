@@ -11,6 +11,7 @@
  * 				- 19.09.23	NZ	Add: RunTime Statistics
  * 				- 19.09.23	NZ	Mod: Clock to use the external 24 MHz Crystal.
  * 				- 12.12.23	NZ	Mod: Internal clock to be 170 MHz.
+ * 				- 12.12.23	NZ	Mod: Moved hardware out of the main.h.
  * 				- 12.12.23	NZ	Mod: Cleaned up file.
  ******************************************************************************
  * @attention
@@ -28,6 +29,11 @@
 /* Includes -----------------------------------------------------------------*/
 #include "main.h"
 
+/* Hardware */
+#include "gpio.h"
+#include "usart.h"
+#include "tim.h"
+
 /* FreeRTOS */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -39,9 +45,9 @@
 /* Private macro ------------------------------------------------------------*/
 
 /* Private variables --------------------------------------------------------*/
-volatile unsigned long ulHighFrequencyTimerTicks;
-
 TaskHandle_t xDefaultTask_Handle = NULL;
+
+volatile unsigned long ulHighFrequencyTimerTicks;
 
 /* Private function prototypes ----------------------------------------------*/
 void SystemClock_Config(void);

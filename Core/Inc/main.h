@@ -8,7 +8,7 @@
  * @date		: 07.09.2023
  ******************************************************************************
  * @remark		: Last Modifications:
- * 				- none
+ * 				- 12.12.23	NZ	Mod: Cleaned up file.
  ******************************************************************************
  * @todo		:	- Change the port and pin of the error led
  ******************************************************************************
@@ -35,12 +35,10 @@ extern "C" {
 /* Includes -----------------------------------------------------------------*/
 #include <stdbool.h>
 
+/* STM32 HAL */
 #include "stm32g4xx_hal.h"
 
-#include "gpio.h"
-#include "tim.h"
-#include "usart.h"
-
+/* Tool Boxes */
 #include "putchar_getchar_redirect.h"
 
 /* Exported types -----------------------------------------------------------*/

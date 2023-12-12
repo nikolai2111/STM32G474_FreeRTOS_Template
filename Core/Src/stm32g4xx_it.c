@@ -9,7 +9,8 @@
  ******************************************************************************
  * @remark		: Last Modifications:
  * 				- 18.09.23	NZ	Mod: Implemented the error handling procedure
- * 				and turn on the error LED.
+ * 								and turn on the error LED.
+ * 				- 12.12.23	NZ	Mod: Moved hardware out of the main.h.
  ******************************************************************************
  * @attention
  *
@@ -24,12 +25,7 @@
  */
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
-
 #include "stm32g4xx_it.h"
-
-#include "FreeRTOS.h"
-#include "task.h"
 
 /* Private typedef ----------------------------------------------------------*/
 
