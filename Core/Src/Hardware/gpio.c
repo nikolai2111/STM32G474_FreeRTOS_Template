@@ -8,7 +8,7 @@
  * @date		: 18.09.2023
  ******************************************************************************
  * @remark		: Last Modifications:
- * 				- none
+ * 				- 12.12.23	NZ	Mod: Cleaned up file.
  ******************************************************************************
  * @attention
  *
@@ -40,7 +40,7 @@
 /* Private user code --------------------------------------------------------*/
 
 /**
- * @brief		This function is executed in case of error occurrence.
+ * @brief		This function initialized the GPIOs.
  *
  * @param		None
  * @return		None
@@ -52,8 +52,7 @@
 void MX_GPIO_Init(void)
 {
 
-	GPIO_InitTypeDef GPIO_InitStruct =
-	{ 0 };
+	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 
 	/* GPIO Ports Clock Enable */
 	__HAL_RCC_GPIOC_CLK_ENABLE();

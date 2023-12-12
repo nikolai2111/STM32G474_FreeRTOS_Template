@@ -1,6 +1,6 @@
 /**
  ******************************************************************************
- * Source		: UART Configuration
+ * Source		: USART Configuration
  ******************************************************************************
  * @file		: usart.c
  * @brief		: This file provides code for the configuration
@@ -9,7 +9,7 @@
  * @date		: 18.09.2023
  ******************************************************************************
  * @remark		: Last Modifications:
- * 				- none
+ * 				- 12.12.23	NZ	Mod: Cleaned up file.
  ******************************************************************************
  * @attention
  *
@@ -42,7 +42,7 @@ UART_HandleTypeDef hlpuart1;
 /* Private user code --------------------------------------------------------*/
 
 /**
- * @brief		LPUART1 init function
+ * @brief		This function initialized the low power UART1.
  *
  * @param		None
  * @return		None
@@ -83,6 +83,16 @@ void MX_LPUART1_UART_Init(void)
 	}
 }
 
+/**
+ * @brief		This function initialized the UARTs on the use MCU.
+ *
+ * @param		None
+ * @return		None
+ *
+ * @author		STMicroelectronics
+ * @remark		Last Modifications:
+ * 				- none
+ *****************************************************************************/
 void HAL_UART_MspInit(UART_HandleTypeDef *uartHandle)
 {
 
@@ -118,6 +128,16 @@ void HAL_UART_MspInit(UART_HandleTypeDef *uartHandle)
 	}
 }
 
+/**
+ * @brief		This function de-initialized the UARTs on the use MCU.
+ *
+ * @param		None
+ * @return		None
+ *
+ * @author		STMicroelectronics
+ * @remark		Last Modifications:
+ * 				- none
+ *****************************************************************************/
 void HAL_UART_MspDeInit(UART_HandleTypeDef *uartHandle)
 {
 
@@ -137,6 +157,6 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef *uartHandle)
 
 /**
  ******************************************************************************
- * End Source	: UART Configuration
+ * End Source	: USART Configuration
  ******************************************************************************
  */
