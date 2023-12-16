@@ -46,8 +46,10 @@ extern "C" {
 /* Exported constants -------------------------------------------------------*/
 
 /* Exported macro -----------------------------------------------------------*/
-#define ERROR_LED_PORT	GPIOA
-#define ERROR_LED_PIN	GPIO_PIN_5
+#define ERROR_LED_PORT				( GPIOA )
+#define ERROR_LED_PIN				( GPIO_PIN_5 )
+
+#define UART_HANDLE_FOR_REDIRECT	( hlpuart1 )
 
 /* Exported variables -------------------------------------------------------*/
 #ifdef DEBUG

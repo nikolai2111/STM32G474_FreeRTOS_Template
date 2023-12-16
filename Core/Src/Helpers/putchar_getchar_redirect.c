@@ -44,7 +44,7 @@
  *****************************************************************************/
 PUTCHAR_PROTOTYPE
 {
-	HAL_UART_Transmit(&hlpuart1, (uint8_t*) &ch, 1, HAL_MAX_DELAY);
+	HAL_UART_Transmit(&UART_HANDLE_FOR_REDIRECT, (uint8_t*) &ch, 1, HAL_MAX_DELAY);
 	return ch;
 }
 
@@ -60,8 +60,8 @@ GETCHAR_PROTOTYPE
 
 	/* Wait for reception of a character on the USART RX line and echo this
 	 * character on console */
-	HAL_UART_Receive(&hlpuart1, (uint8_t*) &ch, 1, HAL_MAX_DELAY);
-	HAL_UART_Transmit(&hlpuart1, (uint8_t*) &ch, 1, HAL_MAX_DELAY);
+	HAL_UART_Receive(&UART_HANDLE_FOR_REDIRECT, (uint8_t*) &ch, 1, HAL_MAX_DELAY);
+	HAL_UART_Transmit(&UART_HANDLE_FOR_REDIRECT, (uint8_t*) &ch, 1, HAL_MAX_DELAY);
 	return ch;
 }
 
