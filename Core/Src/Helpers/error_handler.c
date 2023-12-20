@@ -49,6 +49,7 @@
  * @remark		Last Modifications:
  * 				- 15.09.23	NZ	Mod: Implemented the error handling procedure
  * 				and flash the on board LED.
+ * 				- 20.12.23	NZ	Mod: Count variable to match 200 Hz
  *****************************************************************************/
 void Error_Handler(void)
 {
@@ -61,9 +62,9 @@ void Error_Handler(void)
 		/**
 		 * @note NOP is used because HAL_Delay is based on interrupts and does
 		 * not work. So in the error state the CPU time does not matter. Led
-		 * flashed with approx. 200Hz.
+		 * flashed with approx. 200 Hz.
 		 */
-		for (unsigned long i = 0; i < 120000; i++)
+		for (unsigned long i = 0; i < 850000; i++)
 		{
 			asm("NOP");
 		}
